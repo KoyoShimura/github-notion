@@ -27,7 +27,7 @@ jobs:
       - name: 🔄 Run Notion Sync Script
         env:
           NOTION_KEY: ${{ secrets.NOTION_API_KEY }}
-          PAGE_ID:'2b2f3ece65b580f5bf0df09d1f91cf46' 
+          PAGE_ID: '2b2f3ece65b580f5bf0df09d1f91cf46' 
         run: node sync_script.js
 
       - name: 📤 Commit and Push if changes exist
