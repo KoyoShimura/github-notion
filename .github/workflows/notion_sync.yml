@@ -3,7 +3,7 @@ name: Notion Content Sync (Polling)
 on:
   # JST 09:00 と 21:00 に実行
   schedule:
-    - cron: '0 0,12 * * *' 
+    - cron: '5,13O * * *' 
 
 jobs:
   sync_notion_content:
