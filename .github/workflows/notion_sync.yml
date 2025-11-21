@@ -1,6 +1,9 @@
 name: Notion Content Sync (Polling)
 
 on:
+  push:
+    branches:
+      - main
   # JST 09:00 と 21:00 に実行
   schedule:
     - cron: '5 13 * * *' 
