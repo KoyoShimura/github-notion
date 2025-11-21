@@ -1,0 +1,37 @@
+name: Notion Content Sync (Polling)
+
+on:
+  # JST 09:00 と 21:00 に実行
+  schedule:
+    - cron: '0 0,12 * * *' 
+
+jobs:
+  sync_notion_content:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write # コミットとプッシュのための権限付与
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 📥 Install Notion API SDK
+        run: npm install @notionhq/client
+
+      - name: 🔄 Run Notion Sync Script
+        env:
+          NOTION_KEY: ${{ secrets.NOTION_API_KEY }}
+          PAGE_ID:'2b2f3ece65b580f5bf0df09d1f91cf46' 
+        run: node sync_script.js
+
+      - name: 📤 Commit and Push if changes exist
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Notion Sync: Updated content"
+          file_pattern: 'notion_content.md last_edited_time.txt'
